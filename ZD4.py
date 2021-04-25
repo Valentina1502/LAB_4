@@ -4,23 +4,28 @@
 import math
 import sys
 
-EPS = 1e-5
+EPS = 1e-10
+
 
 if __name__ == '__main__':
-    x = float(input("Введите Х: "))
-    n = int(input("Введите N: "))
-    if n < 0:
-        print("Недопустимое значение N ", file=sys.stderr)
+    x = float(input("Введите точку Х для исследования: "))
+    n = int(input("Введите порядок функции N: "))
+
+    if (x == 0):
+        print("Недопустимое значение N", file=sys.stderr)
         exit(1)
 
-    k = 0
-    a = x
-    S = 0
-    b = math.pow(x/2, n)
+    if (n < 0):
+        print("Недопустимое значение X", file=sys.stderr)
+        exit(-1)
 
-    while math.fabs(a) > EPS:
-        a *= math.pow(-1, k) / (math.pow(2, n + 2 * k) * math.factorial(k)*math.factorial(n + k))
+    a = x
+    S = a
+    k = 0
+    b = (x / 2) ** n
+    while (math.fabs(a) > EPS):
+        a *= (-x ** 2 / 4) / ((k + 1) * (k + n + 1))
         S += a
         k += 1
-
-    print(f" J {n} ({x}) = {(b * S)}")
+    J = b * S / x
+print(f" J {n} ({x}) = {J:.10f}")
